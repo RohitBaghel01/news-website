@@ -64,7 +64,7 @@
     let news_div = document.getElementById("news_div")
  
    async function topHeading(){
-   let res = await fetch(`https://newsapi.org/v2/top-headlines?country=us&apiKey=5811fc8c6782495cbf08291b0ca930b0`)
+   let res = await fetch(`https://newsapi.org/v2/top-headlines?country=in&apiKey=5811fc8c6782495cbf08291b0ca930b0`)
    let data =await res.json();
     // console.log(data.articles)
     appendarticle(data.articles)
