@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" 
+    content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Document</title>
+    <style>
+        #details{
+            display: grid;
+            grid-template-columns: repeat(2,45%);
+            gap: 1%;
+        }
+        img{
+            width:100%
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid" id="container">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+            
+              
+<div class="input-group mb-3">
+    <input type="text" class="form-control" id="news_search" placeholder="news search" aria-label="news_search" aria-describedby="button-addon2">
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="getnews()">Button</button>
+  </div>
+            </div>
+            <div id="details"></div>
+
+    </div>
+</body>
+</html>
+<script>
+let container =document.getElementById('container');
+let main_div = document.getElementById('details')
+async function getnews() {
+let news = document.getElementById('news_search').value
+// console.log(news)
+let res = await fetch(`https://newsapi.org/v2/everything?q=${news}&from=2021-10-18&sortBy=popularity&apiKey=5811fc8c6782495cbf08291b0ca930b0`)
+let data = await res.json()
+console.log(data.articles)
+appendNews(data.articles)
+}
+// getnews()
+function appendNews(data) {
+    main_div.innerHTML = null
+    data.forEach((search) =>{
+ 
+
+let img_div = document.createElement('div')
+let img = document.createElement('img')
+img.src = search.urlToImage
+img_div.append(img)
+// second div
+let second_div = document.createElement('div')
+let title = document.createElement('h3')
+title.innerText = search.title
+let desc = document.createElement('p')
+desc.innerText = search.content
+
+let author = document.createElement('p')
+author.style.fontWeight = '500'
+author.innerText = search.author
+let publish = document.createElement('p')
+publish.innerText = search.publishedAt
+second_div.append(title,desc,author,publish);
+main_div.append(img_div,second_div)
+
+
+    })
+
+}
+
+</script>
